@@ -21,6 +21,7 @@ namespace Acme.Biz
 		{
 			//this.ProductVendor = new Vendor();
 			this.MinimumPrice = .96m;
+			this.Category = "Tools";
 			Console.WriteLine("Product instance created.");
 		}
 
@@ -42,15 +43,31 @@ namespace Acme.Biz
 
 		#region Properties
 		private string productName;
-
 		public string ProductName
 		{
-			get { return productName; }
-			set { productName = value; }
+			get
+			{
+				var formattedValue = productName?.Trim();
+				return formattedValue;
+			}
+			set
+			{
+				if (value.Length < 3)
+				{
+					ValidationMessage = "Product name must be at least 3 characters long";
+				}
+				else if (value.Length > 20)
+				{
+					ValidationMessage = "Product name cannot exceed 20 characters";
+				}
+				else
+				{
+					productName = value;
+				}
+			}
 		}
 
 		private string description;
-
 		public string Description
 		{
 			get { return description; }
@@ -58,7 +75,6 @@ namespace Acme.Biz
 		}
 
 		private int productId;
-
 		public int ProductId
 		{
 			get { return productId; }
@@ -66,7 +82,6 @@ namespace Acme.Biz
 		}
 
 		private Vendor productVendor;
-
 		public Vendor ProductVendor
 		{
 			get
@@ -81,13 +96,19 @@ namespace Acme.Biz
 		}
 
 		private DateTime? availabilityDate;
-
 		public DateTime? AvailabilityDate
 		{
 			get { return availabilityDate; }
 			set { availabilityDate = value; }
 		}
 
+		public string ValidationMessage { get; private set; }
+
+		internal string Category { get; set; }
+		public int SequenceNumber { get; set; } = 1;
+
+		public string ProductCode => this.Category + "-" + this.SequenceNumber;
+		
 		#endregion
 
 		#region Methods
