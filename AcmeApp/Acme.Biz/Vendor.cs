@@ -12,6 +12,11 @@ namespace Acme.Biz
     /// </summary>
     public class Vendor 
     {
+		#region Enums
+		public enum IncludeAddress { Yes, No }
+		public enum SendCopy { Yes, No }
+		#endregion
+
 		#region Properties
 		public int VendorId { get; set; }
         public string CompanyName { get; set; }
@@ -39,35 +44,12 @@ namespace Acme.Biz
 		/// </summary>
 		/// <param name="product">Product to be ordered.</param>
 		/// <param name="quantity">Quantity of products to be ordered.</param>
-		/// <returns></returns>
-		public OperationResult PlaceOrder(Product product, int quantity)
-		{
-			return PlaceOrder(product, quantity, deliverBy: null, instructions: null);
-		}
-
-		/// <summary>
-		/// Places a single product order with the vendor.
-		/// </summary>
-		/// <param name="product">Product to be ordered.</param>
-		/// <param name="quantity">Quantity of products to be ordered.</param>
-		/// <param name="deliverBy">Requested delivery date.</param>
-		/// <returns></returns>
-		public OperationResult PlaceOrder(Product product, int quantity,
-										DateTimeOffset? deliverBy)
-		{
-			return PlaceOrder(product, quantity, deliverBy, instructions: null);
-		}
-
-		/// <summary>
-		/// Places a single product order with the vendor.
-		/// </summary>
-		/// <param name="product">Product to be ordered.</param>
-		/// <param name="quantity">Quantity of products to be ordered.</param>
 		/// <param name="deliverBy">Requested delivery dates.</param>
 		/// <param name="instructions">Additional delivery instructions.</param>
 		/// <returns></returns>
 		public OperationResult PlaceOrder(Product product, int quantity,
-										DateTimeOffset? deliverBy, string instructions)
+										DateTimeOffset? deliverBy = null, 
+										string instructions = "standard delivery")
 		{
 			if (product == null) throw new ArgumentNullException(nameof(product));
 			if (quantity <= 0) throw new ArgumentOutOfRangeException(nameof(quantity));
@@ -99,6 +81,24 @@ namespace Acme.Biz
 			}
 
 			return new OperationResult(success, orderText);
+		}
+
+		/// <summary>
+		/// Places a single product order with the vendor. 
+		/// </summary>
+		/// <param name="product">Product to be ordered.</param>
+		/// <param name="quantity">Quantity of products to be ordered.</param>
+		/// <param name="includeAddress">True to include the shipping address address.</param>
+		/// <param name="sendCopy">True to send a copy of the email to the current customer.</param>
+		/// <returns>Success flag and order text.</returns>
+		public OperationResult PlaceOrder(Product product, int quantity,
+											IncludeAddress includeAddress, SendCopy sendCopy)
+		{
+			var orderText = "Test";
+			if (includeAddress == IncludeAddress.Yes) orderText += " with address";
+			if (sendCopy == SendCopy.Yes) orderText += " with copy";
+
+			return new OperationResult(true, orderText);
 		}
 
 		#endregion
