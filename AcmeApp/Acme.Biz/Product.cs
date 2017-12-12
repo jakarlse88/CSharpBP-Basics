@@ -108,16 +108,13 @@ namespace Acme.Biz
 		public int SequenceNumber { get; set; } = 1;
 
 		public string ProductCode => this.Category + "-" + this.SequenceNumber;
-		
+
+		public decimal Cost { get; set; }
 		#endregion
 
 		#region Methods
 		public string SayHello()
 		{
-			//var vendor = new Vendor();
-			//vendor.SendWelcomeEmail("Message from Product");
-			
-
 			var emailService = new EmailService();
 			var confirmation = emailService.SendMessage("New Product",
 														this.productName,
@@ -132,6 +129,20 @@ namespace Acme.Biz
 					AvailabilityDate?.ToShortDateString();
 		}
 
+		/// <summary>
+		/// Overrides ToString().
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() => this.ProductName + " (" + this.ProductId + ")";
+		
+		/// <summary>
+		/// Calculates the suggested retail price. 
+		/// </summary>
+		/// <param name="markupPercent">Percent used to mark up the cost.</param>
+		/// <returns></returns>
+		public decimal CalculateSuggestedPrice(decimal markupPercent)
+			=> this.Cost + (this.Cost * markupPercent / 100);
+		
 		#endregion
 	}
 }
