@@ -142,8 +142,8 @@ namespace Acme.Biz.Tests
 			var expected = new OperationResult(true, "Test with address");
 
 			//-- Act
-			var actual = vendor.PlaceOrder(product, 12, 
-											Vendor.IncludeAddress.Yes, 
+			var actual = vendor.PlaceOrder(product, 12,
+											Vendor.IncludeAddress.Yes,
 											Vendor.SendCopy.No);
 
 			//-- Assert
@@ -151,6 +151,55 @@ namespace Acme.Biz.Tests
 			Assert.AreEqual(expected.Message, actual.Message);
 		}
 
+		#endregion
+
+		#region Handling strings
+
+		[TestMethod()]
+		public void ToStringTest()
+		{
+			//-- Arrange
+			var vendor = new Vendor();
+			vendor.VendorId = 1;
+			vendor.CompanyName = "ABC Corp";
+			var expected = "Vendor: ABC Corp";
+
+			//-- Act
+			var actual = vendor.ToString();
+
+			//-- Assert
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod()]
+		public void PrepareDirectionsTest()
+		{
+			//-- Arrange
+			var vendor = new Vendor();
+			var expected = @"Insert \r\n to define a new line";
+
+			//-- Act
+			var actual = vendor.PrepareDirections();
+			Console.WriteLine(actual);
+
+			//-- Assert
+			Assert.AreEqual(expected, actual);
+		}
+		
+		[TestMethod()]
+		public void PrepareDirectionsTwoLinesTest()
+		{
+			//-- Arrange
+			var vendor = new Vendor();
+			var expected = "First do this\r\nThen do that";
+
+			//-- Act
+			var actual = vendor.PrepareDirectionsTwoLines();
+			Console.WriteLine(actual);
+
+			//-- Assert
+			Assert.AreEqual(expected, actual);
+		}
 		#endregion
 	}
 }

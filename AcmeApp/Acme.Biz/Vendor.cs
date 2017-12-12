@@ -57,21 +57,23 @@ namespace Acme.Biz
 
 			var success = false;
 
-			var orderText = "Order from Acme, Inc." + System.Environment.NewLine +
+			var orderTextBuilder = new StringBuilder("Order from Acme, Inc." + System.Environment.NewLine +
 							"Product: " + product.ProductCode + System.Environment.NewLine +
-							"Quantity: " + quantity;
+							"Quantity: " + quantity);
+
 			if (deliverBy.HasValue)
 			{
-				orderText += System.Environment.NewLine +
-							"Deliver by: " + deliverBy.Value.ToString("d");
+				orderTextBuilder.Append(System.Environment.NewLine +
+							"Deliver by: " + deliverBy.Value.ToString("d"));
 			}
 
 			if (!String.IsNullOrWhiteSpace(instructions))
 			{
-				orderText += System.Environment.NewLine +
-							"Instructions: " + instructions;
+				orderTextBuilder.Append(System.Environment.NewLine +
+							"Instructions: " + instructions);
 			}
 
+			var orderText = orderTextBuilder.ToString();
 			var emailService = new EmailService();
 			var confirmation = emailService.SendMessage("New Order", orderText, this.Email);
 
@@ -101,6 +103,35 @@ namespace Acme.Biz
 			return new OperationResult(true, orderText);
 		}
 
+
+		public override string ToString()
+		{
+			string vendorInfo = "Vendor: " + this.CompanyName;
+			string result;
+			
+			result = vendorInfo?.ToLower();
+			result = vendorInfo?.ToUpper();
+			result = vendorInfo?.Replace("Vendor", "Supplier");
+
+			var length = vendorInfo?.Length;
+			var index = vendorInfo?.IndexOf(":");
+			var begins = vendorInfo?.StartsWith("Vendor:");
+			
+			return vendorInfo;
+		}
+
+		public string PrepareDirections()
+		{
+			var directions = @"Insert \r\n to define a new line";
+			return directions;
+		}
+
+		public string PrepareDirectionsTwoLines()
+		{
+			var directions = "First do this" + Environment.NewLine +
+							"Then do that";
+			return directions;
+		}
 		#endregion
 	}
 }
