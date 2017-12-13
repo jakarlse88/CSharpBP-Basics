@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Acme.Biz.Tests.VendorTests.PlaceOrderTest" /><Add Test="Acme.Biz.Tests.VendorTests.PlaceOrder_NullProduct_Exception" /><Add Test="Acme.Biz.Tests.VendorTests.PlaceOrder_3Parameters" /><Add Test="Acme.Biz.Tests.VendorTests.PlaceOrder_NoDeliveryDate" /><Add Test="Acme.Biz.Tests.VendorTests.PlaceOrderTest_WithAddress" /></Playlist>

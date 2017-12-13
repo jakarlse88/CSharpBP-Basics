@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Acme.Biz.Tests.VendorTests.SendWelcomeEmail_ValidCompany_Success" /><Add Test="Acme.Biz.Tests.VendorTests.SendWelcomeEmail_EmptyCompany_Success" /><Add Test="Acme.Biz.Tests.VendorTests.SendWelcomeEmail_NullCompany_Success" /></Playlist>

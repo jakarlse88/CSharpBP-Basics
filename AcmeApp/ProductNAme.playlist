@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Acme.Biz.Tests.ProductTests.ProductName_Format" /><Add Test="Acme.Biz.Tests.ProductTests.ProductName_TooShort" /><Add Test="Acme.Biz.Tests.ProductTests.ProductName_TooLong" /><Add Test="Acme.Biz.Tests.ProductTests.ProductName_JustRight" /></Playlist>

@@ -23,11 +23,7 @@ namespace Acme.Biz
 			this.MinimumPrice = .96m;
 			this.Category = "Tools";
 			Console.WriteLine("Product instance created.");
-			var colorOptions = new string[4];
-			colorOptions[0] = "Red";
-			colorOptions[1] = "Espresso";
-			colorOptions[2] = "White";
-			colorOptions[3] = "Navy";
+			string[] colorOptions = { "Red", "Espresso", "White", "Navy" };
 			Console.WriteLine(colorOptions);
 		}
 
@@ -146,8 +142,20 @@ namespace Acme.Biz
 		/// </summary>
 		/// <param name="markupPercent">Percent used to mark up the cost.</param>
 		/// <returns></returns>
-		public decimal CalculateSuggestedPrice(decimal markupPercent)
-			=> this.Cost + (this.Cost * markupPercent / 100);
+		public OperationResult<decimal> CalculateSuggestedPrice(decimal markupPercent)
+		{
+			var message = "";
+			if (markupPercent <= 0m)
+			{
+				message = "Invalid markup percentage.";
+			}
+			else if (markupPercent < 10)
+			{
+				message = "Below recommended markup percentage.";
+			}
+
+			return new OperationResult<decimal>(this.Cost + (this.Cost * markupPercent / 100), message);
+		}
 		
 		#endregion
 	}
