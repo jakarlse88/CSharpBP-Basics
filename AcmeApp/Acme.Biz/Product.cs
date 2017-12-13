@@ -23,6 +23,12 @@ namespace Acme.Biz
 			this.MinimumPrice = .96m;
 			this.Category = "Tools";
 			Console.WriteLine("Product instance created.");
+			var colorOptions = new string[4];
+			colorOptions[0] = "Red";
+			colorOptions[1] = "Espresso";
+			colorOptions[2] = "White";
+			colorOptions[3] = "Navy";
+			Console.WriteLine(colorOptions);
 		}
 
 		public Product(int productId, 
