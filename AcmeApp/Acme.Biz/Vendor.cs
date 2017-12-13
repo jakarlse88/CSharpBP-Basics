@@ -102,22 +102,10 @@ namespace Acme.Biz
 
 			return new OperationResult<bool>(true, orderText);
 		}
-
-
+		
 		public override string ToString()
 		{
-			string vendorInfo = "Vendor: " + this.CompanyName;
-			string result;
-			
-			result = vendorInfo?.ToLower();
-			result = vendorInfo?.ToUpper();
-			result = vendorInfo?.Replace("Vendor", "Supplier");
-
-			var length = vendorInfo?.Length;
-			var index = vendorInfo?.IndexOf(":");
-			var begins = vendorInfo?.StartsWith("Vendor:");
-			
-			return vendorInfo;
+			return $"Vendor: {this.CompanyName} ({this.VendorId})";
 		}
 
 		public string PrepareDirections()
@@ -131,6 +119,29 @@ namespace Acme.Biz
 			var directions = "First do this" + Environment.NewLine +
 							"Then do that";
 			return directions;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj == null || this.GetType() != obj.GetType())
+			{
+				return false;
+			}
+
+			Vendor compareVendor = obj as Vendor;
+			if (compareVendor!= null && 
+				this.VendorId == compareVendor.VendorId &&
+				this.CompanyName == compareVendor.CompanyName &&
+				this.Email == compareVendor.Email)
+			{
+				return true;
+			}
+			return base.Equals(obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return this.VendorId.GetHashCode() ^ this.CompanyName.GetHashCode() ^ this.Email.GetHashCode();
 		}
 		#endregion
 	}

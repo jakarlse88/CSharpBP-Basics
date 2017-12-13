@@ -19,12 +19,9 @@ namespace Acme.Biz
 		#region Constructors
 		public Product()
 		{
-			//this.ProductVendor = new Vendor();
-			this.MinimumPrice = .96m;
-			this.Category = "Tools";
-			Console.WriteLine("Product instance created.");
-			string[] colorOptions = { "Red", "Espresso", "White", "Navy" };
-			Console.WriteLine(colorOptions);
+			var colorOptions = new List<string>() { "Red", "Espresso", "White", "Navy" };
+			colorOptions.Insert(2, "Purple");
+			colorOptions.Remove("White"); 
 		}
 
 		public Product(int productId, 

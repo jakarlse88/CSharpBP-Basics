@@ -8,9 +8,12 @@ namespace Acme.Biz
 {
     public class VendorRepository
     {
+		private List<Vendor> vendors;
         /// <summary>
-        /// Retrieve one vendor.
-        /// </summary>
+		/// Retrieves one vendor.
+		/// </summary>
+		/// <param name="vendorId">ID of the vendor to retrieve.</param>
+		/// <returns>Returns the specified vendor.</returns>
         public Vendor Retrieve(int vendorId)
         {
             // Create the instance of the Vendor class
@@ -27,6 +30,21 @@ namespace Acme.Biz
             }
             return vendor;
         }
+
+		public List<Vendor> Retrieve()
+		{
+			if (vendors == null)
+			{
+				vendors = new List<Vendor>()
+				{
+				new Vendor() { VendorId = 1, CompanyName = "ABC Corp", Email = "abc@abc.com" },
+				new Vendor() { VendorId = 2, CompanyName = "XYZ Corp", Email = "xyz@xyz.com" }
+				};
+			}
+			Console.WriteLine(vendors[0]);
+
+			return vendors;
+		}
 
         public bool Save(Vendor vendor)
         {
