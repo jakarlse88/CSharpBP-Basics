@@ -19,9 +19,19 @@ namespace Acme.Biz
 		#region Constructors
 		public Product()
 		{
+			#region Generic list
 			var colorOptions = new List<string>() { "Red", "Espresso", "White", "Navy" };
 			colorOptions.Insert(2, "Purple");
-			colorOptions.Remove("White"); 
+			colorOptions.Remove("White");
+			#endregion
+
+			var states = new Dictionary<string, string>()
+			{
+				{ "CA", "California" },
+				{ "WA", "Washington" },
+				{ "NY", "New York" }
+			};
+			Console.WriteLine(states);
 		}
 
 		public Product(int productId, 
