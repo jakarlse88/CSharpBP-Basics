@@ -19,6 +19,9 @@ namespace Acme.Biz
 		#region Constructors
 		public Product()
 		{
+			this.Category = "Tools";
+			this.MinimumPrice = 0.96m;
+
 			#region Generic list
 			var colorOptions = new List<string>() { "Red", "Espresso", "White", "Navy" };
 			colorOptions.Insert(2, "Purple");

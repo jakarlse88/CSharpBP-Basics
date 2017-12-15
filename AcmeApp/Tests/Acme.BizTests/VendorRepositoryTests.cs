@@ -73,28 +73,56 @@ namespace Acme.Biz.Tests
 			var actual = repository.Retrieve();
 
 			//-- Assert
-			CollectionAssert.AreEqual(expected, actual);
+			CollectionAssert.AreEqual(expected, actual.ToList());
 		}
-		#endregion
 
 		[TestMethod()]
-		public void RetrieveWithKeysTest()
+		public void RetrieveWithIteratorTest()
 		{
 			//-- Arrange
 			var repository = new VendorRepository();
-			var expected = new Dictionary<string, Vendor>()
+			var expected = new List<Vendor>()
 			{
-				{ "ABC Corp", new Vendor()
-					{ VendorId = 5, CompanyName = "ABC Corp", Email = "abc@abc.com" } },
-				{ "XYZ Corp", new Vendor()
-					{ VendorId = 8, CompanyName = "XYZ Corp", Email = "xyz@xyz.com" } }
+				{ new Vendor() { VendorId = 1, CompanyName = "ABC Corp", Email = "abc@abc.com" } },
+				{ new Vendor() { VendorId = 2, CompanyName = "XYZ Corp", Email = "xyz@xyz.com"} }
 			};
 
 			//-- Act
-			var actual = repository.RetrieveWithKeys();
+			var vendorIterator = repository.RetrieveWithIterator();
+			foreach (var item in vendorIterator)
+			{
+				Console.WriteLine(item);
+			}
+
+			var actual = vendorIterator.ToList();
 
 			//-- Assert
 			CollectionAssert.AreEqual(expected, actual);
 		}
+		#endregion
+
+		#region LINQ
+		[TestMethod()]
+		public void RetrieveAllTest()
+		{
+			//-- Arrange
+			var repository = new VendorRepository();
+			var expected = new List<Vendor>()
+			{
+				{ new Vendor() { VendorId = 22, CompanyName = "Amalgamated Toys", Email = "a@abc.com"} },
+				{ new Vendor() { VendorId = 35, CompanyName = "Car Toys", Email = "car@abc.com"} },
+				{ new Vendor() { VendorId = 28, CompanyName = "Toy Blocks Inc", Email = "blocks@abc.com"} },
+				{ new Vendor() { VendorId = 42, CompanyName = "Toys for Fun", Email = "fun@abc.com"} }
+			};
+
+			//-- Act
+			var vendors = repository.RetrieveAll();
+			var vendorQuery = vendors
+								.Where(v => v.CompanyName.Contains("Toy"))
+								.OrderBy(v => v.CompanyName);
+			//-- Assert
+			CollectionAssert.AreEqual(expected, vendorQuery.ToList()); 
+		}
+		#endregion
 	}
 }

@@ -208,19 +208,6 @@ namespace Acme.Biz.Tests
 		#endregion
 
 		#region Auto-implemented properties/Prop. initialisation
-		[TestMethod]
-		public void Category_DefaultValue()
-		{
-			//-- Arrange
-			var currentProduct = new Product();
-			var expected = "Tools";
-
-			//-- Act
-			var actual = currentProduct.Category;
-
-			//-- Assert
-			Assert.AreEqual(expected, actual);
-		}
 
 		[TestMethod]
 		public void Category_NewValue()
